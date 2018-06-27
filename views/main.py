@@ -44,7 +44,8 @@ def deposit():
         ).where(Account.account_number == form.account_number.data).execute()
 
         Transaction.insert(
-            account_id = account.id,
+            account_number = form.account_number.data,
+            reference_number = form.account_number.data,
             amount = form.amount.data,
             type = 'DEPOSIT'
         ).execute()
@@ -65,7 +66,8 @@ def withdraw():
         ).where(Account.account_number == form.account_number.data).execute()
 
         Transaction.insert(
-            account_id = account.id,
+            account_number = form.account_number.data,
+            reference_number = form.account_number.data,
             amount = form.amount.data,
             type = 'WITHDRAW'
         ).execute()
@@ -79,7 +81,7 @@ def transfer():
     form = TransferForm(request.form)
     if form.validate_on_submit():
         sender_account = Account.get(Account.account_number == form.sender_account_number.data)
-        receiver_account = Account.get(Account.account_number == form.sender_account_number.data)
+        receiver_account = Account.get(Account.account_number == form.receiver_account_number.data)
 
         Account.update(
             savings_balance = Account.savings_balance - form.amount.data,
@@ -92,8 +94,8 @@ def transfer():
         ).where(Account.account_number == form.receiver_account_number.data).execute()
 
         Transaction.insert(
-            account_id = sender_account.id,
-            target_account = receiver_account.id,
+            account_number = form.sender_account_number.data,
+            reference_number = form.receiver_account_number.data,
             amount = form.amount.data,
             type = 'FUND TRANSFER'
         ).execute()
@@ -117,3 +119,9 @@ def inquiry():
         ).get()
 
     return render_template('main/inquiry.html', form=form, account=account)
+
+@bp.route('/history')
+@authenticated
+def history():
+    history = Transaction.select().order_by(Transaction.created_at.desc()).execute()
+    return render_template('main/history.html', history=history)

@@ -44,10 +44,10 @@ class Account(BaseModel):
 
 class Transaction(BaseModel):
     id = PrimaryKeyField(index=True)
-    account_id = ForeignKeyField(Account)
+    account_number = CharField()
     amount = DecimalField(decimal_places=2)
     type = CharField()
-    target_account = ForeignKeyField(Account, null=True)
+    reference_number = CharField()
     created_at = DateTimeField(default=datetime.now())
 
     class Meta:
