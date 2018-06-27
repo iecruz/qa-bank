@@ -1,0 +1,28 @@
+{% extends 'teller/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-5">
+        <a class="btn-custom">
+            <span class="big-text">Withdraw</span class="big-text">
+        </a>
+        <a href="{{ url_for('teller.inquiry') }}" class="btn-custom">
+            <span class="big-text">Inquire Balance</span class="big-text">
+        </a>
+        <a class="btn-custom">
+            <span class="big-text">Fund Transfer</span class="big-text">
+        </a>
+    </div>
+    <div class="col-sm-5 offset-sm-2">
+        <a class="btn-custom">
+            <span class="big-text">Deposit</span class="big-text">
+        </a>
+        <a class="btn-custom">
+            <span class="big-text">Change PIN</span class="big-text">
+        </a>
+        <a href="{{ url_for('teller.logout') }}" class="btn-custom">
+            <span class="big-text">Exit</span class="big-text">
+        </a>
+    </div>
+</div>
+{% endblock %}

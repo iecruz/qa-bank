@@ -1,0 +1,6 @@
+/env
+/node_modules
+/__pycache__
+/core/__pycache__
+/views/__pycache__
+/.idea

@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block content %}
+<div class="section">
+    <div class="container">
+        <h4 class="blue-text">Open Account</h4>
+        <form action="{{ url_for('account.create') }}" method="post">
+            {{ form.csrf_token }}
+            <div class="card-panel">
+                <div class="section">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form.user_id(class_='validate') }} {{ form.user_id.label }}
+                            {% for error in form.user_id.errors %}
+                                <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form.pin(class_='validate') }} {{ form.pin.label }}
+                            {% for error in form.pin.errors %}
+                                <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form.checking_balance(class_='validate') }} {{ form.checking_balance.label }}
+                            {% for error in form.checking_balance.errors %}
+                                <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form.savings_balance(class_='validate') }} {{ form.savings_balance.label }}
+                            {% for error in form.savings_balance.errors %}
+                                <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <center>
+                    <a href="{{ url_for('user.index') }}" class="btn waves-effect blue">
+                        <i class="material-icons left">keyboard_arrow_left</i>Back</a>
+                    <button type="submit" class="btn waves-effect blue">
+                        <i class="material-icons left">send</i>Submit</button>
+                </center>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block navbar_css %}
+{% endblock %}
+
+{% block content %}
+<div class="valign-wrapper full-height light-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col s4 offset-s4">
+                <h2 class="white-text center-align">ABS</h2>
+                <form action="{{ url_for('main.login') }}" method="post">
+                    {{ form.csrf_token }}
+                    <div class="card-panel">
+                        <div class="input-field">
+                            {{ form.email_address(class_='validate') }}
+                            {{ form.email_address.label }}
+                            {% for error in form.email_address.errors %}
+                                <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field">
+                            {{ form.password(class_='validate') }}
+                            {{ form.password.label }}
+                            {% for error in form.password.errors %}
+                                <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <center>
+                            <button class="btn-large waves-effect waves-light light-blue"><i class="material-icons right">send</i>Login</button>
+                        </center>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

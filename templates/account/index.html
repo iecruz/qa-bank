@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="container">
+        <h4 class="blue-text">Account Manager</h4>
+        <div class="card-panel">
+            <a href="{{ url_for('account.create') }}" class="btn waves-effect blue">New Account</a>
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>Account Number</th>
+                        <th>Account Owner</th>
+                        <th>Checking Balance</th>
+                        <th>Savings Balance</th>
+                        <th>Status</th>
+                        <!-- <th>Last Transactio</th> -->
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for account in accounts %}
+                    <tr>
+                        <th>{{ account.account_number }}</th>
+                        <td>{{ account.user.last_name }}, {{ account.user.first_name }}</td>
+                        <td>&#8369; {{ account.checking_balance }}</td>
+                        <td>&#8369; {{ account.savings_balance }}</td>
+                        <td>{{ 'Active' if not account.deleted else 'Inactive' }}</td>
+                        <td>
+                            {% if account.deleted %}
+                            <form action="{{ url_for('account.activate', id=account.id) }}" method="post" style="display: inline-block;">
+                                <button type="submit" class="btn-small green waves-effect">Activate</button>
+                            </form>
+                            {% else %}
+                            <form action="{{ url_for('account.deactivate', id=account.id) }}" method="post" style="display: inline-block;">
+                                <button type="submit" class="btn-small red waves-effect">Deactivate</button>
+                            </form>
+                            {% endif %}
+                            <a href="" class="btn-small blue waves-effect">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+<script>
+    $(function() {
+        $('#userTable').DataTable();
+    });
+</script>
+{% endblock %}

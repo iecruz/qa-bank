@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+<div class="section">
+    <div class="container">
+        <h4 class="blue-text">Fund Transfer</h4>
+        <form action="{{ url_for('main.transfer') }}" method="post">
+            {{ form.csrf_token }}
+            <div class="card-panel">
+                <div class="section">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form.sender_account_number(class_='validate') }} {{ form.sender_account_number.label }} {% for error in form.sender_account_number.errors %}
+                            <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form.receiver_account_number(class_='validate') }} {{ form.receiver_account_number.label }} {% for error in form.receiver_account_number.errors %}
+                            <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        <div class="input-field col s12">
+                            {{ form.amount(class_='validate') }} {{ form.amount.label }} {% for error in form.amount.errors %}
+                            <small class="red-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <center>
+                    <a href="{{ url_for('main.index') }}" class="btn waves-effect blue">
+                        <i class="material-icons left">keyboard_arrow_left</i>Back</a>
+                    <button class="btn waves-effect blue">
+                        <i class="material-icons left">send</i>Transfer</button>
+                </center>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

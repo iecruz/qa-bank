@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block content %}
+<div class="section">
+    <div class="container">
+        <h4 class="blue-text">View Profile</h4>
+        <div class="card">
+            <div class="card-content">
+                <div class="section">
+                    <h5 class="card-title blue-text">Personal Information</h5>
+                    <div class="row">
+                        <div class="col s4">
+                            <h5 class="card-title">{{ user.first_name }}</h5>
+                            <p class="blue-text">First Name</p>
+                        </div>
+                        <div class="col s4">
+                            <h5 class="card-title">{{ user.middle_name }}</h5>
+                            <p class="blue-text">Middle Name</p>
+
+                        </div>
+                        <div class="col s4">
+                            <h5 class="card-title">{{ user.last_name }}</h5>
+                            <p class="blue-text">Last Name</p>
+
+                        </div>
+                        <div class="col s12">
+                            <h5 class="card-title">{{ user.birth_date }}</h5>
+                            <p class="blue-text">Birth Date</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="section">
+                    <h5 class="card-title blue-text">Contact Information</h5>
+                    <div class="row">
+                        <div class="col s6">
+                            <h5 class="card-title">{{ user.email_address }}</h5>
+                            <p class="blue-text">Email Address</p>
+                        </div>
+                        <div class="col s6">
+                            <h5 class="card-title">{{ user.phone_number }}</h5>
+                            <p class="blue-text">Phone Number</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="section">
+                    <h5 class="card-title blue-text">User Account Informations</h5>
+                    <div class="row">
+                        <div class="col s4">
+                            <h5 class="card-title">{{ user.created_at }}</h5>
+                            <p class="blue-text">Creation Date</p>
+                        </div>
+                        <div class="col s4">
+                            <h5 class="card-title">{{ user.updated_at }}</h5>
+                            <p class="blue-text">Update Date</p>
+                        </div>
+                        <div class="col s4">
+                            <h5 class="card-title">{{ 'Active' if not user.deleted else 'Inactive' }}</h5>
+                            <p class="blue-text">Status</p>
+                        </div>
+                    </div>
+                </div>
+                <center>
+                    <a href="{{ url_for('user.index') }}" class="btn waves-effect blue">
+                        <i class="material-icons left">keyboard_arrow_left</i>Back</a>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
