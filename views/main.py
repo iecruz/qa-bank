@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session, abort
 from werkzeug.security import check_password_hash
 from core.models import Transaction, Account, User
+from playhouse.shortcuts import model_to_dict
 from core.forms import LoginForm, TransactionForm, TransferForm, InquiryForm
 from core.wrappers import authenticated
 
@@ -19,7 +20,7 @@ def login():
     if form.validate_on_submit():
         user = User.get_or_none(User.email_address == form.email_address.data)
         if user and check_password_hash(user.password, form.password.data):
-            session['user'] = user.id
+            session['user'] = model_to_dict(user)
 
             flash("Welcome back, {}!".format(user.first_name))
             return redirect(request.args.get('next', url_for('main.index')))

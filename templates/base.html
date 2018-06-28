@@ -71,10 +71,10 @@
                 </div>
                 <!-- <a href="#user"><img class="circle" src="images/yuna.jpg"></a> -->
                 <a href="#name">
-                    <span class="white-text name">John Doe</span>
+                    <span class="white-text name">{{ session['user']['first_name'] }} {{ session['user']['last_name'] }}</span>
                 </a>
                 <a href="#email">
-                    <span class="white-text email">jdandturk@gmail.com</span>
+                    <span class="white-text email">{{ session['user']['email_address'] }}</span>
                 </a>
             </div>
         </li>
