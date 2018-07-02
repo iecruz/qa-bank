@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, IntegerField, DecimalField
+from wtforms.fields import StringField, PasswordField, IntegerField, DecimalField, SelectField
 from wtforms.fields.html5 import TelField, EmailField, DateField
 from wtforms.validators import Required, Email, Regexp, EqualTo, Length, NumberRange, ValidationError
 from core.models import User, Account
@@ -8,10 +8,19 @@ def validate_account_number(form, field):
     if not Account.get_or_none((Account.account_number == field.data) & (Account.deleted == False)):
         raise ValidationError('Account is inactivate or does not exists')
 
+def validate_time_deposit(form, field):
+    if not Account.get_or_none((Account.account_number == field.data) & (Account.time_deposit == 0)):
+        raise ValidationError('Account is currently holding an existing time deposit')
+
 class TellerLoginForm(FlaskForm):
-    account = StringField('Account Number', [Required()])
+    account_number = StringField('Account Number', [Required(), validate_account_number])
     password = PasswordField('PIN', [Required()])
 
+class ChangePinForm(FlaskForm):
+    current_pin = PasswordField('Current PIN', [Required(), Regexp('[0-9]{4,6}', message='PIN must be 4 digits')])
+    new_pin = PasswordField('New PIN', [Required(), EqualTo('confirm_pin', message='PIN must match'), Regexp('[0-9]{4,6}', message='PIN must be 4 digits')])
+    confirm_pin = PasswordField('Confirm PIN', [Required(), Regexp('[0-9]{4,6}', message='PIN must be 4 digits')])
+    
 class LoginForm(FlaskForm):
     email_address = EmailField('Email Address', [Required(), Email()])
     password = PasswordField('Password', [Required()])
@@ -43,11 +52,15 @@ class CreateAccountForm(FlaskForm):
             raise ValidationError('User does not exists')
             
     pin = IntegerField('PIN', [Required(), NumberRange(1000,9999)])
-    checking_balance = DecimalField('Checking Balance', [Required(), NumberRange(1000)], places=2)
-    savings_balance = DecimalField('Savings Balance', [Required(), NumberRange(1000)], places=2)
+    balance = DecimalField('Initial Deposit', [Required(), NumberRange(1000)], places=2)
 
 class TransactionForm(FlaskForm):
     account_number = IntegerField('Account Number', [Required(), validate_account_number])
+    amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
+
+class TimeDepositForm(FlaskForm):
+    account_number = IntegerField('Account Number', [Required(), validate_account_number, validate_time_deposit])
+    duration = SelectField('Duration', [Required()], coerce=int)
     amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
 
 class TransferForm(FlaskForm):

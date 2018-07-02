@@ -17,20 +17,44 @@
         .full-height {
             height: 100vh;
         }
+
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0; 
+        }
     </style>
     {% block css %}
     {% endblock %}
 
     <title>Bank</title>
 </head>
-<body class="bg-primary">
+<body class="bg-danger">
 
-    <div class="position-relative d-flex justify-content-center align-items-center full-height" style="background-image:url({{ url_for('static', filename='img/bg.png') }}); background-size:cover;">
-        <div class="container">
-            {% block content %}
-            {% endblock %}
+    <main>
+        <div class="position-relative d-flex justify-content-center align-items-center full-height" style="background-image:url({{ url_for('static', filename='img/bg.png') }}); background-size:cover;">
+            <div class="container">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="container">
+                    <div class="row justify-content-center">
+                        {% for message in messages %}
+                        <div class="col-sm-12 col-md-6 card card-body bg-danger text-white">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+                {% endif %}
+                {% endwith %}
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
-    </div>
+    </main>
 
     <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

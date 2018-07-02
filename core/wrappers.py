@@ -8,3 +8,11 @@ def authenticated(f):
             return redirect(url_for('main.login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
+
+def teller_auth(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'atm_auth' not in session:
+            return redirect(url_for('teller.login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function

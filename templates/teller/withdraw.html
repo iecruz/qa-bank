@@ -1,0 +1,22 @@
+{% extends 'teller/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <form id="withdrawForm" action="{{ url_for('teller.withdraw') }}" method="POST">
+            <h2 class="font-weight-bold text-center text-uppercase">Withdraw</h2>
+            <br>
+            <div class="card card-body bg-danger text-white">
+                <h5 class="card-title">Enter Amount</h5>
+                <div class="form-group">
+                    <input type="number" name="amount" id="amountField" class="form-control" min="0" max="25000">
+                </div>
+            </div>
+            <a href="#!" class="btn-custom" onclick="document.getElementById('withdrawForm').submit()">
+                <span>Enter</span>
+            </a>
+            <a href="{{ url_for('teller.index') }}" class="btn-custom"><span>Back</span></a>
+        </form>
+    </div>
+</div>
+{% endblock %}

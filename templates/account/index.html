@@ -15,8 +15,8 @@
                     <tr>
                         <th>Account Number</th>
                         <th>Account Owner</th>
-                        <th>Checking Balance</th>
-                        <th>Savings Balance</th>
+                        <th>Balance</th>
+                        <th>Time Deposit</th>
                         <th>Status</th>
                         <!-- <th>Last Transactio</th> -->
                         <th>Actions</th>
@@ -27,8 +27,8 @@
                     <tr>
                         <th>{{ account.account_number }}</th>
                         <td>{{ account.user.last_name }}, {{ account.user.first_name }}</td>
-                        <td>&#8369; {{ account.checking_balance }}</td>
-                        <td>&#8369; {{ account.savings_balance }}</td>
+                        <td>&#8369; {{ account.balance }}</td>
+                        <td>&#8369; {{ account.time_deposit }}</td>
                         <td>{{ 'Active' if not account.deleted else 'Inactive' }}</td>
                         <td>
                             {% if account.deleted %}
@@ -40,7 +40,7 @@
                                 <button type="submit" class="btn-small red waves-effect">Deactivate</button>
                             </form>
                             {% endif %}
-                            <a href="" class="btn-small blue waves-effect">View</a>
+                            <!-- <a href="" class="btn-small blue waves-effect">View</a> -->
                         </td>
                     </tr>
                     {% endfor %}

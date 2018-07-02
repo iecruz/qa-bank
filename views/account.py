@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
+from werkzeug.security import generate_password_hash
 from core.models import Account, User
 from core.forms import CreateAccountForm
 
@@ -12,9 +13,9 @@ def index():
     accounts = Account.select(
         Account.id, 
         Account.account_number, 
-        Account.checking_balance, 
-        Account.savings_balance, 
+        Account.balance, 
         Account.deleted, 
+        Account.time_deposit, 
         User.first_name, 
         User.last_name
     ).join(User, attr='user').execute()
@@ -27,9 +28,8 @@ def create():
         Account.insert(
             account_number = randint(1000000000, 9999999999),
             user_id = form.user_id.data,
-            pin = form.pin.data,
-            checking_balance = form.checking_balance.data,
-            savings_balance = form.savings_balance.data
+            pin = generate_password_hash(str(form.pin.data)),
+            balance = form.balance.data
         ).execute()
         flash('Account successfully opened')
         return redirect(url_for('account.index'))

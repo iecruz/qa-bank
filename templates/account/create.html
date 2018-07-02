@@ -19,15 +19,9 @@
                                 <small class="red-text">{{ error }}</small>
                             {% endfor %}
                         </div>
-                        <div class="input-field col s6">
-                            {{ form.checking_balance(class_='validate') }} {{ form.checking_balance.label }}
-                            {% for error in form.checking_balance.errors %}
-                                <small class="red-text">{{ error }}</small>
-                            {% endfor %}
-                        </div>
-                        <div class="input-field col s6">
-                            {{ form.savings_balance(class_='validate') }} {{ form.savings_balance.label }}
-                            {% for error in form.savings_balance.errors %}
+                        <div class="input-field col s12">
+                            {{ form.balance(class_='validate') }} {{ form.balance.label }}
+                            {% for error in form.balance.errors %}
                                 <small class="red-text">{{ error }}</small>
                             {% endfor %}
                         </div>

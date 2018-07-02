@@ -33,14 +33,25 @@ class Account(BaseModel):
     user_id = ForeignKeyField(User)
     account_number = CharField(index=True, unique=True)
     pin = CharField()
-    checking_balance = DecimalField(decimal_places=2)
-    savings_balance = DecimalField(decimal_places=2)
+    balance = DecimalField(decimal_places=2)
+    time_deposit = DecimalField(decimal_places=2, default=0.0)
     deleted = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.now())
     updated_at = DateTimeField(default=datetime.now())
 
     class Meta:
         table_name = 'accounts'
+
+class TimeDeposit(BaseModel):
+    id = PrimaryKeyField(index=True)
+    account_number = CharField()
+    initial_amount = DecimalField(decimal_places=2)
+    terminal_date = DateTimeField()
+    interest = DoubleField()
+    created_at = DateTimeField(default=datetime.now())
+
+    class Meta:
+        table_name = 'time_deposits'
 
 class Transaction(BaseModel):
     id = PrimaryKeyField(index=True)
@@ -55,7 +66,7 @@ class Transaction(BaseModel):
 
 def connect_db():
     db.connect(reuse_if_open=True)
-    db.create_tables([User, Account, Transaction])
+    db.create_tables([User, Account, Transaction, TimeDeposit])
 
 def close_db():
     if not db.is_closed():
