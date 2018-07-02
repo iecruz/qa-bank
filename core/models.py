@@ -72,7 +72,7 @@ class Log(BaseModel):
     created_at = DateTimeField(default=datetime.now())
 
     class Meta:
-        table = 'logs'
+        table_name = 'logs'
 
 def connect_db():
     db.connect(reuse_if_open=True)
