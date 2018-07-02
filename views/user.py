@@ -8,16 +8,19 @@ from datetime import datetime
 bp = Blueprint('user', __name__)
 
 @bp.route('/')
+@authenticated
 def index():
     users = User.select().execute()
     return render_template('user/index.html', users=users)
 
 @bp.route('/view/<int:id>')
+@authenticated
 def view(id):
     user = User.get(User.id == id)
     return render_template('user/view.html', user=user)
 
 @bp.route('/create', methods=['GET', 'POST'])
+@authenticated
 def create():
     form = CreateUserForm(request.form)
     if form.validate_on_submit():
@@ -36,6 +39,7 @@ def create():
     return render_template('user/create.html', form=form)
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
+@authenticated
 def update(id):
     form = UpdateUserForm(request.form)
     user = User.get(User.id == id)
@@ -55,6 +59,7 @@ def update(id):
     return render_template('user/update.html', form=form, user=user)
 
 @bp.route('/deactivate/<int:id>', methods=['POST'])
+@authenticated
 def deactivate(id):
     User.update(
         deleted=True,
@@ -63,6 +68,7 @@ def deactivate(id):
     return redirect(url_for('user.index'))
 
 @bp.route('/activate/<int:id>', methods=['POST'])
+@authenticated
 def activate(id):
     User.update(
         deleted=False,
