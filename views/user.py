@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash
 from core.models import User
 from core.forms import CreateUserForm, UpdateUserForm
+from core.wrappers import authenticated
 
 from datetime import datetime
 
