@@ -71,6 +71,9 @@ class Log(BaseModel):
     action = CharField()
     created_at = DateTimeField(default=datetime.now())
 
+    class Meta:
+        table = 'logs'
+
 def connect_db():
     db.connect(reuse_if_open=True)
     db.create_tables([User, Account, Transaction, TimeDeposit, Log])

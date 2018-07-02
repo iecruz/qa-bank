@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session, abort
 from werkzeug.security import check_password_hash
-from core.models import Transaction, Account, User, TimeDeposit, Log
+from core.models import Transaction, Account, User, TimeDeposit, Log, DoesNotExist
 from playhouse.shortcuts import model_to_dict
 from core.forms import LoginForm, TransactionForm, TransferForm, InquiryForm, TimeDepositForm
 from core.wrappers import authenticated
@@ -23,11 +23,14 @@ def index():
             deleted = True
         ).where(TimeDeposit.id == time_deposit.id).execute()
 
-    log = (Log.select()
-    .where(
-        (Log.action == 'LOGIN') & 
-        (Log.user_id == session['user']['id'])
-    ).order_by(Log.created_at.desc()).get()).created_at.strftime('%d %B %Y %I:%M %p')
+    try:
+        log = (Log.select()
+        .where(
+            (Log.action == 'LOGIN') & 
+            (Log.user_id == session['user']['id'])
+        ).order_by(Log.created_at.desc()).get()).created_at.strftime('%d %B %Y %I:%M %p')
+    except DoesNotExist:
+        log = None
     return render_template('main/index.html', log=log)
 
 @bp.route('/login', methods=['GET', 'POST'])

@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, request, session, flash, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-from peewee import fn
 from playhouse.shortcuts import model_to_dict
 from core.forms import TellerLoginForm, ChangePinForm, TransactionForm
 from core.wrappers import teller_auth
-from core.models import Account, User, Transaction, Log
+from core.models import Account, User, Transaction, Log, fn
 
 from datetime import datetime, time
 
