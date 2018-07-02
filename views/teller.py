@@ -4,7 +4,7 @@ from peewee import fn
 from playhouse.shortcuts import model_to_dict
 from core.forms import TellerLoginForm, ChangePinForm, TransactionForm
 from core.wrappers import teller_auth
-from core.models import Account, User, Transaction
+from core.models import Account, User, Transaction, Log
 
 from datetime import datetime, time
 

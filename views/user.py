@@ -33,6 +33,7 @@ def create():
             phone_number = form.phone_number.data,
             address = form.address.data,
             birth_date = form.birth_date.data,
+            type = form.type.data,
             password = generate_password_hash(form.password.data),
         ).execute()
         flash('User successfully registered')
@@ -53,6 +54,7 @@ def update(id):
             phone_number = form.phone_number.data,
             address = form.address.data,
             birth_date = form.birth_date.data,
+            type = form.type.data,
             updated_at=datetime.now()
         ).where(User.id == id).execute()
         flash('User successfully updated')

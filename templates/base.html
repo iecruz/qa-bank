@@ -51,13 +51,7 @@
                 <a href="#" class="brand-logo"><i class="material-icons">account_balance</i>ABS</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li>
-                        <a href="">Home</a>
-                    </li>
-                    <li>
-                        <a href="">Accounts</a>
-                    </li>
-                    <li>
-                        <a href="">Transaction</a>
+                        <a href="{{ url_for('main.index') }}">Home</a>
                     </li>
                 </ul>
             </div>
@@ -82,6 +76,7 @@
         <li>
             <a href="{{ url_for('main.index') }}" class="waves-effect"><i class="material-icons">home</i>Home</a>
         </li>
+        {% if session['user']['type'] == 3 %}
         <li>
             <div class="divider"></div>
         </li>
@@ -106,12 +101,18 @@
         <li>
             <a class="waves-effect" href="{{ url_for('main.history') }}"><i class="material-icons">history</i>History</a>
         </li>
+        {% endif %}
         <li>
             <div class="divider"></div>
         </li>
         <li>
+            <a class="subheader">Management</a>
+        </li>
+        {% if session['user']['type'] == 1 %}
+        <li>
             <a class="waves-effect" href="{{ url_for('user.index') }}"><i class="material-icons">account_box</i>User Management</a>
         </li>
+        {% endif %}
         <li>
             <a class="waves-effect" href="{{ url_for('account.index') }}"><i class="material-icons">account_balance</i>Account Management</a>
         </li>

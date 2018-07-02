@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from werkzeug.security import check_password_hash
 from wtforms.fields import StringField, PasswordField, IntegerField, DecimalField, SelectField
 from wtforms.fields.html5 import TelField, EmailField, DateField
 from wtforms.validators import Required, Email, Regexp, EqualTo, Length, NumberRange, ValidationError
@@ -23,6 +24,16 @@ class ChangePinForm(FlaskForm):
     
 class LoginForm(FlaskForm):
     email_address = EmailField('Email Address', [Required(), Email()])
+
+    def validate_email_address(form, field):
+        user = User.get_or_none(User.email_address == field.data)
+        if not user:
+            raise ValidationError('Invalid email address and password')
+        elif user.type > 3:
+            raise ValidationError('User does not have administration or operator privileges')
+        elif not check_password_hash(user.password, form.password.data):
+            raise ValidationError('Invalid email address and password')
+
     password = PasswordField('Password', [Required()])
 
 class CreateUserForm(FlaskForm):
@@ -35,6 +46,11 @@ class CreateUserForm(FlaskForm):
     birth_date = DateField('Birth Date', [Required()])
     password = PasswordField('Password', [Required(), Length(8), EqualTo('confirm_password', message='Password must match')])
     confirm_password = PasswordField('Confirm Password', [Required(), Length(8)])
+    type = SelectField('Type', [Required()], choices=[
+        (9, 'Regular Customer'),
+        (3, 'Operator'),
+        (1, 'Administrator')
+    ], coerce=int)
 
 class UpdateUserForm(FlaskForm):
     first_name = StringField('First Name', [Required()])
@@ -44,6 +60,11 @@ class UpdateUserForm(FlaskForm):
     phone_number = TelField('Phone Number', [Required(), Length(7,11), Regexp('[0-9]+')])
     address = StringField('Address', [Required()])
     birth_date = DateField('Birth Date', [Required()])
+    type = SelectField('Type', [Required()], choices=[
+        (9, 'Regular Customer'),
+        (3, 'Operator'),
+        (1, 'Administrator')
+    ], coerce=int)
 
 class CreateAccountForm(FlaskForm):
     user_id = IntegerField('User ID', [Required()])
