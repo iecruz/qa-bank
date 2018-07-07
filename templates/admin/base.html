@@ -137,7 +137,27 @@
                 </ol>
             </section> -->
 
+            
             <section class="content container-fluid">
+                {% block notifications %}
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="container">
+                    <div class="box box-solid box-info">
+                        <div class="box-header">
+                            <h3 class="box-title">Notifications</h3>
+                        </div>
+                        <div class="box-body">
+                            {% for message in messages %}
+                            <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+                {% endblock %}
+                
                 {% block content %}
                 {% endblock %}
             </section>
