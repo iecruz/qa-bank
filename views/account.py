@@ -18,7 +18,6 @@ def index():
         Account.balance, 
         Account.type, 
         Account.deleted, 
-        Account.time_deposit, 
         User.first_name, 
         User.last_name
     ).join(User, attr='user').execute()
