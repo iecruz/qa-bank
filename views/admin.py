@@ -16,7 +16,7 @@ def index():
     history = Transaction.select().order_by(Transaction.created_at.desc()).execute()
     for time_deposit in time_deposits:
         Account.update(
-            account = Account.balance + (time_deposit.amount * time_deposit.interest) + time_deposit.amount
+            account = Account.balance + (time_deposit.amount * time_deposit.interest)
         ).where(Account.account_number == time_deposit.account_number).execute()
 
         TimeDeposit.update(
@@ -63,7 +63,7 @@ def time_deposit():
         }
 
         Account.update(
-            time_deposit = Account.time_deposit + form.amount.data,
+            balance = Account.balance + form.amount.data,
             updated_at = datetime.now()
         ).where(Account.account_number == form.account_number.data).execute()
 

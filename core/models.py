@@ -35,7 +35,6 @@ class Account(BaseModel):
     pin = CharField()
     type = IntegerField(default=1)
     balance = DecimalField(decimal_places=2)
-    time_deposit = DecimalField(decimal_places=2, default=0.0)
     deleted = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.now())
     updated_at = DateTimeField(default=datetime.now())

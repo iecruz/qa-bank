@@ -10,8 +10,8 @@ def validate_account_number(form, field):
         raise ValidationError('Account is inactivate or does not exists')
 
 def validate_time_deposit(form, field):
-    if not Account.get_or_none((Account.account_number == field.data) & (Account.time_deposit == 0)):
-        raise ValidationError('Account is currently holding an existing time deposit')
+    if not Account.get_or_none((Account.account_number == field.data) & (Account.type == 3)):
+        raise ValidationError('Account is not a time deposit account')
 
 class TellerLoginForm(FlaskForm):
     account_number = StringField('Account Number', [Required(), validate_account_number])
