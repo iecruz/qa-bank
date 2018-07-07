@@ -47,7 +47,7 @@ def login():
 
             flash("Welcome back, {}!".format(user.first_name))
 
-            if user.type == 2:
+            if user.type <= 2:
                 return redirect(url_for('admin.index'))
             else:
                 return redirect(url_for('main.index'))
