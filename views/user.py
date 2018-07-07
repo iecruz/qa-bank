@@ -21,7 +21,7 @@ def view(id):
     return render_template('user/view.html', user=user)
 
 @bp.route('/create', methods=['GET', 'POST'])
-# @authenticated
+@authenticated
 def create():
     form = CreateUserForm(request.form)
     if form.validate_on_submit():

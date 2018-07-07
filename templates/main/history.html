@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="section">
+    <div class="container">
+        <h4 class="blue-text text-darken-2">Transaction History</h4>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="container">
+    <div class="section">
+        <div class="card-panel">
+            <table id="transactionHistory">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Transaction Type</th>
+                        <th>Reference Number</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in transactions %}
+                    <tr>
+                        <th>{{ record.id }}</th>
+                        <td>{{ record.account_number }}</td>
+                        <td>&#8369; {{ record.amount }}</td>
+                        <td>{{ record.type }}</td>
+                        <td>{{ record.reference_number }}</td>
+                        <td>{{ record.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}"> {% endblock %} {% block script %}
+<script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+<script>
+    $('#transactionHistory').DataTable({
+        order: [5, 'desc']
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="section">
+    <div class="container">
+        <h4 class="blue-text">Transfer Fund</h4>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="section">
+    <div class="container">
+        <form action="{{ url_for('main.transfer') }}" method="post">
+            {{ form.csrf_token }}
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        {{ form.sender_account_number }} {{ form.sender_account_number.label }}
+                        {% for error in form.sender_account_number.errors %}
+                        <small class="red-text">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="input-field col s12 m6">
+                        {{ form.receiver_account_number(class_='validate') }} {{ form.receiver_account_number.label }}
+                        {% for error in form.receiver_account_number.errors %}
+                        <small class="red-text">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form.amount(class_='validate') }} {{ form.amount.label }}
+                        {% for error in form.amount.errors %}
+                        <small class="red-text">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="submit" class="btn waves-effect blue darken-1">
+                    <i class="material-icons left">swap_horizontal_circle</i>Transfer</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $('select').formSelect();
+</script>
+{% endblock %}

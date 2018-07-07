@@ -27,11 +27,7 @@ class LoginForm(FlaskForm):
 
     def validate_email_address(form, field):
         user = User.get_or_none(User.email_address == field.data)
-        if not user:
-            raise ValidationError('Invalid email address and password')
-        elif user.type > 3:
-            raise ValidationError('User does not have administration or operator privileges')
-        elif not check_password_hash(user.password, form.password.data):
+        if not user or not check_password_hash(user.password, form.password.data):
             raise ValidationError('Invalid email address and password')
 
     password = PasswordField('Password', [Required()])
@@ -91,6 +87,11 @@ class TimeDepositForm(FlaskForm):
 
 class TransferForm(FlaskForm):
     sender_account_number = IntegerField('Sender Account Number', [Required(), validate_account_number])
+    receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number])
+    amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
+
+class UserTransferForm(FlaskForm):
+    sender_account_number = SelectField('Account Number', [Required(), validate_account_number])
     receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number])
     amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
 

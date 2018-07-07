@@ -37,19 +37,19 @@
     {% endblock %}
     {% block css %} {% endblock %}
 
-    <title>QABanking</title>
+    <title>QABank</title>
 </head>
 
 <body>
     {% block navbar %}
-    <header>
-        <nav class="z-depth-1">
-            <div class="nav-wrapper blue darken-2 z-depth-0">
-                <div class="container">
+    <!-- <header>
+        <nav class="z-depth-0">
+            <div class="nav-wrapper white">
+                <div class="container grey-text">
                     <a href="#" data-target="slide-out" class="sidenav-trigger">
                         <i class="material-icons">menu</i>
                     </a>
-                    <a href="#" class="brand-logo">QABanking</a>
+                    <a href="#" class="brand-logo"><b>QAB</b>ank</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
                             <a href="{{ url_for('main.index') }}"><i class="material-icons left">home</i>Home</a>
@@ -58,12 +58,12 @@
                 </div>
             </div>
         </nav>
-    </header>
-    <ul id="slide-out" class="sidenav sidenav-fixed">
+    </header> -->
+    <ul id="slide-out" class="sidenav sidenav-fixed z-depth-0" style="border-right: 1px solid #e0e0e0;">
         <li class="blue darken-2">
             <div class="section">
                 <h4 class="center-align white-text">
-                    D Bank
+                    <b>QAB</b>ank
                 </h4>
             </div>
             <div class="divider"></div>
@@ -72,46 +72,21 @@
         <li>
             <a href="{{ url_for('main.index') }}" class="waves-effect"><i class="material-icons">home</i>Home</a>
         </li>
-        {% if session['user']['type'] == 3 %}
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li>
-            <a class="subheader">Transactions</a>
-        </li>
-        <li>
-            <a class="waves-effect" href="{{ url_for('main.deposit') }}"><i class="material-icons">arrow_upwards</i>Deposit</a>
-        </li>
-        <li>
-            <a class="waves-effect" href="{{ url_for('main.withdraw') }}"><i class="material-icons">arrow_downwards</i>Withdraw</a>
-        </li>
-        <li>
-            <a class="waves-effect" href="{{ url_for('main.time_deposit') }}"><i class="material-icons">access_time</i>Time Deposit</a>
-        </li>
-        <li>
-            <a class="waves-effect" href="{{ url_for('main.inquiry') }}"><i class="material-icons">account_balance_wallet</i>Balance Inquiry</a>
-        </li>
-        <li>
-            <a class="waves-effect" href="{{ url_for('main.transfer') }}"><i class="material-icons">swap_horizontal</i>Fund Transfer</a>
-        </li>
-        <li>
-            <a class="waves-effect" href="{{ url_for('main.history') }}"><i class="material-icons">history</i>History</a>
-        </li>
-        {% endif %}
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li>
-            <a class="subheader">Management</a>
-        </li>
-        {% if session['user']['type'] == 1 %}
-        <li>
-            <a class="waves-effect" href="{{ url_for('user.index') }}"><i class="material-icons">account_box</i>User Management</a>
-        </li>
-        {% endif %}
-        <li>
-            <a class="waves-effect" href="{{ url_for('account.index') }}"><i class="material-icons">account_balance</i>Account Management</a>
-        </li>
+       <li>
+           <div class="divider"></div>
+       </li>
+       <li>
+           <a href="{{ url_for('main.transfer') }}" class="waves-effect">
+               <i class="material-icons">swap_horizontal</i>Transfer Funds</a>
+       </li>
+       <!-- <li>
+           <a href="#" class="waves-effect">
+               <i class="material-icons">account_balance_wallet</i>Balance Inquiry</a>
+       </li> -->
+       <li>
+           <a href="{{ url_for('main.history') }}" class="waves-effect">
+               <i class="material-icons">history</i>Transaction History</a>
+       </li>
         <li>
             <div class="divider"></div>
         </li>
@@ -128,7 +103,7 @@
             <div class="section">
                 <div class="container">
                     {% for message in messages %}
-                    <div class="card-panel light-blue white-text">
+                    <div class="card-panel blue darken-2 white-text">
                         <!-- <h5>
                             Notifications
                             <i class="material-icons right" onclick="closeNotification(event)">close</i>

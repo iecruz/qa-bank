@@ -1,141 +1,50 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'main/base.html' %} {% block content %}
 <div class="section">
     <div class="container">
-        <h4 class="blue-text center-align">Dashboard</h4>
+        <h4 class="blue-text text-darken-2">Dashboard</h4>
+    </div>
+</div>
+<div class="divider"></div>
+    <div class="container">
+    <div class="section">
         <div class="row">
             <div class="col s12 m8">
-                <div class="card-panel light-blue white-text">
-                    <h5>User Information</h5>
-                    <div class="section">
-                        <h6>
-                            <b>{{ session['user']['first_name'] }} {{ session['user']['last_name'] }}</b>
-                        </h6>
-                        <h6>Name</h6>
-                        <h6>
-                            <b>{{ session['user']['email_address'] }}</b>
-                        </h6>
-                        <h6>Email Address</h6>
-                        <h6>
-                            <b>{{ 'Administrator' if session['user']['type'] == 1 else 'Operator' }}</b>
-                        </h6>
-                        <h6>Type</h6>
+                <h5 class="blue-text text-darken-2">Accounts</h5>
+                <div class="row">
+                    {% for account in accounts %}
+                    <div class="col s6">
+                        <div class="card-panel blue darken-2 white-text">
+                            <h5>{{ account.account_number }}</h5>
+                            <h6>Account Number</h6>
+                            <h5>
+                                {% if account.type == 1 %}
+                                Savings
+                                {% elif account.type == 2 %}
+                                ATM
+                                {% elif account.type == 3 %}
+                                Time Deposit
+                                {% endif %}
+                            </h5>
+                            <h6>Account Type</h6>
+                            <h5>&#8369; {{ account.balance }}</h5>
+                            <h6>Balance</h6>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col s12 m4">
-                <div class="card-panel light-blue white-text">
-                    <h5>Recent Log Details</h5>
-                    <div class="section">
-                        <h6>
-                            <b>{{ log }}</b>
-                        </h6>
-                        <h6>Last Logged In</h6>
-                    </div>
-                    <div class="section">
-                        <center>
-                            <a href="{{ url_for('main.logout') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                                <i class="material-icons left">exit_to_app</i>Logout</a>
-                        </center>
-                    </div>
-                </div>
-            </div>
-            {% if session['user']['type'] == 1 %}
-            <div class="col s12 m6">
-                <div class="card-panel light-blue white-text">
-                    <h5 class="center-align">User Management</h5>
-                    <center>
-                        <a href="{{ url_for('user.create') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">add</i>Create User</a>
-                        <a href="{{ url_for('user.index') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">list</i>View All User</a>
-                    </center>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="card-panel light-blue white-text">
-                    <h5 class="center-align">Account Management</h5>
-                    <center>
-                        <a href="{{ url_for('account.create') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">add</i>Create Account</a>
-                        <a href="{{ url_for('account.index') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">list</i>View All Account</a>
-                    </center>
-                </div>
-            </div>
-            {% elif session['user']['type'] == 3 %}
-            <div class="col s12">
-                <div class="card-panel light-blue white-text">
-                    <h5 class="center-align">Transaction</h5>
-                    <br>
-                    <center>
-                        <a href="{{ url_for('main.deposit') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">arrow_upwards</i>Deposit</a>
-
-                        <a href="{{ url_for('main.withdraw') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">arrow_downwards</i>Withdraw</a>
-
-                        <a href="{{ url_for('main.transfer') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">swap_horizontal</i>Transfer Funds</a>
-                    </center>
-                    <br>
-                    <center>
-                        <a href="{{ url_for('main.inquiry') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">account_balance_wallet</i>Balance inquiry</a>
-
-                        <a href="{{ url_for('main.time_deposit') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">access_time</i>Time Deposit</a>
-
-                        <a href="{{ url_for('main.history') }}" class="btn-large waves-effect grey lighten-3 black-text">
-                            <i class="material-icons left">history</i>View Transaction History</a>
-                    </center>
-                </div>
-            </div>
-            {% endif %}
-            <!-- <div class="col s12">
-                <div class="card-panel">
-                    <h5>Transaction History Chart</h5>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="video-container">
-                                <canvas id="transactionChart"></canvas>
-                            </div>
+                <h5 class="blue-text text-darken-2">Transactions</h5>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card-panel blue darken-2 white-text">
+                            <h5>{{ transactions }} transactions</h5>
+                            <h6>Total Number of Transactions</h6>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
-{% endblock %} {% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<!-- <script>
-    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-        'November', 'December'
-    ];
-    var config = {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Number of Transactions per Month',
-                backgroundColor: '#ff0000',
-                borderColor: '#ff0000',
-                data: [1, 2, 3, 4, 5, 6, 7],
-                fill: false,
-            }]
-        },
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                text: 'Transaction History'
-            }
-        }
-    };
-
-    window.onload = function () {
-        var ctx = document.getElementById('transactionChart').getContext('2d');
-        window.myLine = new Chart(ctx, config);
-    };
-</script> -->
 {% endblock %}

@@ -1,43 +1,29 @@
-{% extends 'base.html' %}
-
-{% block navbar %}
-{% endblock %}
-
-{% block navbar_css %}
-{% endblock %}
-
-{% block notifications %}
-{% endblock %}
-
-{% block content %}
-<div class="valign-wrapper full-height blue darken-2">
-    <div class="container">
-        <div class="row">
-            <div class="col s4 offset-s4">
-                <h2 class="white-text center-align">QA Bank</h2>
+{% extends 'main/base.html' %} {% block navbar %} {% endblock %} {% block navbar_css %} {% endblock %} {% block notifications
+%} {% endblock %} {% block content %}
+<div class="full-height row" style="background-image: url({{ url_for('static', filename='img/bg.jpg') }}); background-size: cover; background-position: center;">
+    <div class="row col s12 m6 offset-m6 blue darken-2 full-height valign-wrapper">
+            <div class="col s6 offset-s3">
+                <h2 class="white-text center-align">
+                    <b>QAB</b>ank</h2>
                 <form action="{{ url_for('main.login') }}" method="post">
                     {{ form.csrf_token }}
                     <div class="card-panel">
                         <div class="input-field">
-                            {{ form.email_address(class_='validate') }}
-                            {{ form.email_address.label }}
-                            {% for error in form.email_address.errors %}
-                                <small class="red-text">{{ error }}</small>
+                            {{ form.email_address(class_='validate') }} {{ form.email_address.label }} {% for error in form.email_address.errors %}
+                            <small class="red-text">{{ error }}</small>
                             {% endfor %}
                         </div>
                         <div class="input-field">
-                            {{ form.password(class_='validate') }}
-                            {{ form.password.label }}
-                            {% for error in form.password.errors %}
-                                <small class="red-text">{{ error }}</small>
+                            {{ form.password(class_='validate') }} {{ form.password.label }} {% for error in form.password.errors %}
+                            <small class="red-text">{{ error }}</small>
                             {% endfor %}
                         </div>
                         <center>
-                            <button class="btn-large waves-effect waves-light blue darken-2"><i class="material-icons right">send</i>Login</button>
+                            <button class="btn-large waves-effect waves-light blue darken-2">
+                                <i class="material-icons right">send</i>Login</button>
                         </center>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
 </div>
