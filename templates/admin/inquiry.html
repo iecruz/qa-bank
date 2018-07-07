@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %} {% block content %}
+<div class="container">
+    <form action="{{ url_for('admin.inquiry') }}" method="post">
+        {{ form.csrf_token }}
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Balance Inquiry</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    {{ form.account_number.label }} {{ form.account_number(class_='form-control') }} {% for error in form.account_number.errors
+                    %}
+                    <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                {% if account %}
+                <hr>
+                <h4>Balance Inquiry</h4>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 class="text-primary">{{ account.user.last_name }}, {{ account.user.first_name }}</h5>
+                        <small>Account Owner</small>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <h5 class="text-primary">&#8369; {{ account.balance }}</h5>
+                        <small>Balance</small>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <h5 class="text-primary">&#8369; {{ account.time_deposit }}</h5>
+                        <small>Time Deposit Amount</small>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="box-footer">
+                <a href="{{ url_for('admin.index') }}" class="btn btn-default">
+                    Back</a>
+                <button type="submit" class="btn btn-primary">
+                    Search</button>
+            </div>
+    </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>QABank Admin</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skins/_all-skins.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css"> -->
+    {% block style %} {% endblock %}
+</head>
+
+<body class="skin-blue sidebar-mini">
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+        <header class="main-header">
+            <a href="#" class="logo">
+                <span class="logo-mini">
+                    <b>QA</b>B</span>
+                <span class="logo-lg">
+                    <b>QAB</b>anking</span>
+            </a>
+
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a> -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{{ url_for('main.logout') }}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu tree" data-widget="tree">
+                    <li class="header">TRANSACTIONS</li>
+                    <li>
+                        <a href="{{ url_for('admin.index') }}">
+                            <i class="fa fa-history"></i>
+                            Transaction History
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.deposit') }}">
+                            <i class="fa fa-arrow-up"></i>
+                            Deposit
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.withdraw') }}">
+                            <i class="fa fa-arrow-down"></i>
+                            Withdraw
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.time_deposit') }}">
+                            <i class="fa fa-clock"></i>
+                            Time Deposit
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.inquiry') }}">
+                            <i class="fa fa-balance-scale"></i>
+                            Balance Inquiry
+                        </a>
+                    </li>
+                    <li class="header">OPERATIONS</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span>User Management</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ url_for('user.create') }}">Create New User</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('user.index') }}">View Users</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-money-check"></i>
+                            <span>Account Management</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ url_for('account.create') }}">Open New Account</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('account.index') }}">View Accounts</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="header">LOGOUT</li>
+                    <li>
+                        <a href="{{ url_for('main.logout') }}">
+                            <i class="fa fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+
+        <div class="content-wrapper" style="min-height: 512px;">
+            <!-- <section class="content-header">
+                <h1>
+                    Page Header
+                    <small>Optional description</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> Level</a>
+                    </li>
+                    <li class="active">Here</li>
+                </ol>
+            </section> -->
+
+            <section class="content container-fluid">
+                {% block content %}
+                {% endblock %}
+            </section>
+        </div>
+    </div>
+
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/adminlte.min.js') }}"></script>
+    {% block script %} {% endblock %}
+</body>
+
+</html>
