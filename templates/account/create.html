@@ -1,40 +1,42 @@
-{% extends 'base.html' %} {% block content %}
-<div class="section">
-    <div class="container">
-        <h4 class="blue-text">Open Account</h4>
-        <form action="{{ url_for('account.create') }}" method="post">
-            {{ form.csrf_token }}
-            <div class="card-panel">
-                <div class="section">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            {{ form.user_id(class_='validate') }} {{ form.user_id.label }}
-                            {% for error in form.user_id.errors %}
-                                <small class="red-text">{{ error }}</small>
-                            {% endfor %}
-                        </div>
-                        <div class="input-field col s6">
-                            {{ form.pin(class_='validate') }} {{ form.pin.label }}
-                            {% for error in form.pin.errors %}
-                                <small class="red-text">{{ error }}</small>
-                            {% endfor %}
-                        </div>
-                        <div class="input-field col s12">
-                            {{ form.balance(class_='validate') }} {{ form.balance.label }}
-                            {% for error in form.balance.errors %}
-                                <small class="red-text">{{ error }}</small>
-                            {% endfor %}
-                        </div>
+{% extends 'admin/base.html' %} {% block content %}
+<div class="container">
+    <form action="{{ url_for('account.create') }}" method="post">
+        {{ form.csrf_token }}
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Open New Account</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-6">
+                        {{ form.user_id.label }} {{ form.user_id(class_='form-control') }} {% for error in form.user_id.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        {{ form.pin.label }} {{ form.pin(class_='form-control') }} {% for error in form.pin.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-sm-12 col-md-4">
+                        {{ form.type.label }} {{ form.type(class_='form-control') }} {% for error in form.type.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-sm-12 col-md-8">
+                        {{ form.balance.label }} {{ form.balance(class_='form-control') }} {% for error in form.balance.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
                     </div>
                 </div>
-                <center>
-                    <a href="{{ url_for('user.index') }}" class="btn waves-effect blue">
-                        <i class="material-icons left">keyboard_arrow_left</i>Back</a>
-                    <button type="submit" class="btn waves-effect blue">
-                        <i class="material-icons left">send</i>Submit</button>
-                </center>
             </div>
-        </form>
-    </div>
+            <div class="box-footer">
+                <a href="{{ url_for('account.index') }}" class="btn btn-default">
+                    Back</a>
+                <button type="submit" class="btn btn-primary">
+                    Submit</button>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}

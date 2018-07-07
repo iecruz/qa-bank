@@ -16,6 +16,7 @@ def index():
         Account.id, 
         Account.account_number, 
         Account.balance, 
+        Account.type, 
         Account.deleted, 
         Account.time_deposit, 
         User.first_name, 
@@ -38,7 +39,7 @@ def create():
         return redirect(url_for('account.index'))
     return render_template('account/create.html', form=form)
 
-@bp.route('/deactivate/<int:id>', methods=['POST'])
+@bp.route('/deactivate/<int:id>')
 @authenticated
 def deactivate(id):
     Account.update(
@@ -47,7 +48,7 @@ def deactivate(id):
     ).where(Account.id == id).execute()
     return redirect(url_for('account.index'))
 
-@bp.route('/activate/<int:id>', methods=['POST'])
+@bp.route('/activate/<int:id>')
 @authenticated
 def activate(id):
     Account.update(

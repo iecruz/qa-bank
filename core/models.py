@@ -4,7 +4,7 @@ from playhouse.db_url import connect
 import os
 from datetime import datetime, date
 
-db = connect(os.getenv('DATABASE_URL', 'postgres://postgres:postgres@localhost:5432/bank'));
+db = connect(os.getenv('DATABASE_URL', 'postgres://postgres:postgres@localhost:5432/dbank'));
 
 class BaseModel(Model):
     class Meta:
@@ -33,6 +33,7 @@ class Account(BaseModel):
     user_id = ForeignKeyField(User)
     account_number = CharField(index=True, unique=True)
     pin = CharField()
+    type = IntegerField(default=1)
     balance = DecimalField(decimal_places=2)
     time_deposit = DecimalField(decimal_places=2, default=0.0)
     deleted = BooleanField(default=False)

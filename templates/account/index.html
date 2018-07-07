@@ -1,15 +1,10 @@
-{% extends 'base.html' %}
-
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}">
-{% endblock %}
-
-{% block content %}
-<div class="section">
-    <div class="container">
-        <h4 class="blue-text">Account Manager</h4>
-        <div class="card-panel">
-            <a href="{{ url_for('account.create') }}" class="btn waves-effect blue">New Account</a>
+{% extends 'admin/base.html' %} {% block content %}
+<div class="container">
+    <div class="box box-solid box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Account Manager</h3>
+        </div>
+        <div class="box-body">
             <table id="userTable">
                 <thead>
                     <tr>
@@ -17,8 +12,8 @@
                         <th>Account Owner</th>
                         <th>Balance</th>
                         <th>Time Deposit</th>
+                        <th>Account Type</th>
                         <th>Status</th>
-                        <!-- <th>Last Transactio</th> -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -29,17 +24,25 @@
                         <td>{{ account.user.last_name }}, {{ account.user.first_name }}</td>
                         <td>&#8369; {{ account.balance }}</td>
                         <td>&#8369; {{ account.time_deposit }}</td>
+                        <td>
+                            {% if account.type == 1 %}
+                            Savings
+                            {% elif account.type == 2 %}
+                            ATM
+                            {% elif account.type == 3 %}
+                            Time Deposit
+                            {% endif %}
+                        </td>
                         <td>{{ 'Active' if not account.deleted else 'Inactive' }}</td>
                         <td>
-                            {% if account.deleted %}
-                            <form action="{{ url_for('account.activate', id=account.id) }}" method="post" style="display: inline-block;">
-                                <button type="submit" class="btn-small green waves-effect">Activate</button>
-                            </form>
-                            {% else %}
-                            <form action="{{ url_for('account.deactivate', id=account.id) }}" method="post" style="display: inline-block;">
-                                <button type="submit" class="btn-small red waves-effect">Deactivate</button>
-                            </form>
-                            {% endif %}
+                            <div class="btn-group">
+                                {% if account.deleted %}
+                                <a href="{{ url_for('account.activate', id=account.id) }}" class="btn btn-success">Activate</a>
+                                {% else %}
+                                <a href="{{ url_for('account.deactivate', id=account.id) }}" class="btn btn-danger">Deactivate</a>
+                                </form>
+                                {% endif %}
+                            </div>
                             <!-- <a href="" class="btn-small blue waves-effect">View</a> -->
                         </td>
                     </tr>
@@ -49,12 +52,11 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block script %}
+{% endblock %} {% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/datatables.min.css') }}"> {% endblock %} {% block script %}
 <script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
 <script>
-    $(function() {
+    $(function () {
         $('#userTable').DataTable();
     });
 </script>

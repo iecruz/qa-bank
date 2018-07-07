@@ -1,69 +1,68 @@
-{% extends 'base.html' %} {% block content %}
-<div class="section">
-    <div class="container">
-        <h4 class="blue-text">Update User</h4>
-        <form action="{{ url_for('user.update', id=user.id) }}" method="post">
-            {{ form.csrf_token }}
-            <div class="card-panel">
+{% extends 'admin/base.html' %} {% block content %}
+<div class="container">
+    <form action="{{ url_for('user.update', id=user.id) }}" method="post">
+        {{ form.csrf_token }}
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Update User</h3>
+            </div>
+            <div class="box-body">
                 <div class="row">
-                    <div class="input-field col s12 m4">
-                        {{ form.first_name(class_='validate', value=user.first_name) }} {{ form.first_name.label }} {% for error in form.first_name.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-4">
+                            {{ form.first_name.label }} {{ form.first_name(class_='form-control', value=user.first_name) }} {% for error in form.first_name.errors
+                        %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12 m4">
-                        {{ form.middle_name(class_='validate', value=user.middle_name) }} {{ form.middle_name.label }} {% for error in form.middle_name.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-4">
+                            {{ form.middle_name.label }} {{ form.middle_name(class_='form-control', value=user.middle_name) }} {% for error in form.middle_name.errors
+                        %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12 m4">
-                        {{ form.last_name(class_='validate', value=user.last_name) }} {{ form.last_name.label }} {% for error in form.last_name.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-4">
+                            {{ form.last_name.label }} {{ form.last_name(class_='form-control', value=user.last_name) }} {% for error in form.last_name.errors
+                        %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12 m6">
-                        {{ form.email_address(class_='validate', value=user.email_address) }} {{ form.email_address.label }} {% for error in form.email_address.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-6">
+                            {{ form.email_address.label }} {{ form.email_address(class_='form-control', value=user.email_address) }} {% for error in form.email_address.errors
+                        %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12 m6">
-                        {{ form.phone_number(class_='validate', value=user.phone_number) }} {{ form.phone_number.label }} {% for error in form.phone_number.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-6">
+                            {{ form.phone_number.label }} {{ form.phone_number(class_='form-control', value=user.phone_number) }} {% for error in form.phone_number.errors
+                        %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12">
-                        {{ form.address(class_='validate', value=user.address) }} {{ form.address.label }} {% for error in form.address.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12">
+                            {{ form.address.label }} {{ form.address(class_='form-control', value=user.address) }} {% for error in form.address.errors %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12 m8">
-                        {{ form.birth_date(class_='validate', value=user.birth_date) }} {{ form.birth_date.label }} {% for error in form.birth_date.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-8">
+                            {{ form.birth_date.label }} {{ form.birth_date(class_='form-control', value=user.birth_date) }} {% for error in form.birth_date.errors
+                        %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
-                    <div class="input-field col s12 m4">
-                        {{ form.type(class_='validate') }} {{ form.type.label }} {% for error in form.type.errors %}
-                        <small class="red-text">{{ error }}</small>
+                    <div class="form-group col-sm-12 col-md-4">
+                            {{ form.type.label }} {{ form.type(class_='form-control') }} {% for error in form.type.errors %}
+                        <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
                 </div>
-                <center>
-                    <a href="{{ url_for('user.index') }}" class="btn waves-effect blue">
-                        <i class="material-icons left">keyboard_arrow_left</i>Back</a>
-                    <button type="submit" class="btn waves-effect blue">
-                        <i class="material-icons left">send</i>Submit</button>
-                </center>
             </div>
-        </form>
-    </div>
+            <div class="box-footer">
+                    <a href="{{ url_for('user.index') }}" class="btn btn-default">
+                        Back</a>
+                    <button type="submit" class="btn btn-primary">
+                        Submit</button>
+            </div>
+        </div>
+    </form>
 </div>
-{% endblock %}
-
-{% block script %}
-<script>
-    $(function() {
-        $('#type option[value="{{ user.type }}"]').prop('selected', true);
-        $('select').formSelect();
-    });
-</script>
 {% endblock %}

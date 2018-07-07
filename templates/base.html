@@ -19,7 +19,7 @@
         }
     </style>
     {% block navbar_css %}
-    <!-- <style>
+    <style>
         header,
         main,
         footer {
@@ -33,44 +33,40 @@
                 padding-left: 0;
             }
         }
-    </style> -->
+    </style>
     {% endblock %}
     {% block css %} {% endblock %}
 
-    <title>ABS</title>
+    <title>QABanking</title>
 </head>
 
 <body>
     {% block navbar %}
     <header>
         <nav class="z-depth-1">
-            <div class="nav-wrapper light-blue">
-                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large">
-                    <i class="material-icons">menu</i>
-                </a>
-                <a href="#" class="brand-logo"><i class="material-icons">account_balance</i>ABS</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li>
-                        <a href="{{ url_for('main.index') }}">Home</a>
-                    </li>
-                </ul>
+            <div class="nav-wrapper blue darken-2 z-depth-0">
+                <div class="container">
+                    <a href="#" data-target="slide-out" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <a href="#" class="brand-logo">QABanking</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li>
+                            <a href="{{ url_for('main.index') }}"><i class="material-icons left">home</i>Home</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
-    <ul id="slide-out" class="sidenav">
-        <li>
-            <div class="user-view">
-                <div class="background">
-                    <img src="{{ url_for('static', filename='img/bank.jpg') }}">
-                </div>
-                <!-- <a href="#user"><img class="circle" src="images/yuna.jpg"></a> -->
-                <a href="#name">
-                    <span class="white-text name">{{ session['user']['first_name'] }} {{ session['user']['last_name'] }}</span>
-                </a>
-                <a href="#email">
-                    <span class="white-text email">{{ session['user']['email_address'] }}</span>
-                </a>
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li class="blue darken-2">
+            <div class="section">
+                <h4 class="center-align white-text">
+                    D Bank
+                </h4>
             </div>
+            <div class="divider"></div>
         </li>
 
         <li>
@@ -126,19 +122,28 @@
     {% endblock %} 
     
     <main>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div class="section">
-            <div class="container">
-                {% for message in messages %}
-                <div class="card-panel light-blue white-text">
-                    {{ message }}
+        {% block notifications %}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="section">
+                <div class="container">
+                    {% for message in messages %}
+                    <div class="card-panel light-blue white-text">
+                        <!-- <h5>
+                            Notifications
+                            <i class="material-icons right" onclick="closeNotification(event)">close</i>
+                        </h5>
+                        <br> -->
+                        <!-- <p> -->
+                            {{ message }}
+                        <!-- </p> -->
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
-        {% endif %}
-        {% endwith %}
+            {% endif %}
+            {% endwith %}
+        {% endblock %}
         {% block content %} {% endblock %}
     </main>
 
@@ -148,6 +153,11 @@
         $(document).ready(function () {
             $('.sidenav').sidenav();
         });
+
+        function closeNotification(e) {
+            e.preventDefault();
+            $(e.target).closest('.section').fadeOut();
+        }
     </script>
     {% block script %} {% endblock %}
 </body>

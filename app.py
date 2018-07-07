@@ -1,6 +1,6 @@
 from flask import Flask
 
-from views import main, user, account, teller
+from views import main, admin, user, account, teller
 
 from core.models import connect_db, close_db
 
@@ -16,9 +16,10 @@ elif env == 'development':
     app.config.from_object('core.config.DevelopmentConfig')
 
 app.register_blueprint(main.bp)
+app.register_blueprint(admin.bp, url_prefix='/admin')
 app.register_blueprint(account.bp, url_prefix='/account')
-app.register_blueprint(user.bp, url_prefix='/user')
-app.register_blueprint(teller.bp, url_prefix='/teller')
+app.register_blueprint(user.bp, url_prefix='/admin/user')
+app.register_blueprint(teller.bp, url_prefix='/admin/teller')
 
 @app.before_request
 def before_request():
