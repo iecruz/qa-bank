@@ -33,6 +33,7 @@ def create():
             account_number = randint(1000000000, 9999999999),
             user_id = form.user_id.data,
             pin = generate_password_hash(str(form.pin.data)),
+            type = form.type.data,
             balance = form.balance.data
         ).execute()
         flash('Account successfully opened')
