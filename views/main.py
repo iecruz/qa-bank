@@ -48,9 +48,9 @@ def login():
             flash("Welcome back, {}!".format(user.first_name))
 
             if user.type == 2:
-                return redirect(request.args.get('next', url_for('admin.index')))
+                return redirect(url_for('admin.index'))
             else:
-                return redirect(request.args.get('next', url_for('main.index')))
+                return redirect(url_for('main.index'))
     return render_template('main/login.html', form=form)
 
 @bp.route('/logout', methods=['GET', 'POST'])
