@@ -136,8 +136,8 @@ def transfer():
             type = 'FUND TRANSFER'
         ).execute()
         flash('Fund Transfer successful')
-        return redirect(url_for('main.transfer'))
-    return render_template('main/transfer.html', form=form)
+        return redirect(url_for('admin.transfer'))
+    return render_template('admin/transfer.html', form=form)
 
 @bp.route('/inquiry', methods=['GET', 'POST'])
 @authenticated

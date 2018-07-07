@@ -13,6 +13,10 @@ def validate_time_deposit(form, field):
     if not Account.get_or_none((Account.account_number == field.data) & (Account.type == 3)):
         raise ValidationError('Account is not a time deposit account')
 
+def validate_receiver_account(form, field):
+    if not Account.get_or_none((Account.account_number == field.data) & (Account.type <= 2)):
+        raise ValidationError('Account is a time deposit account')
+
 class TellerLoginForm(FlaskForm):
     account_number = StringField('Account Number', [Required(), validate_account_number])
     password = PasswordField('PIN', [Required()])
@@ -87,12 +91,12 @@ class TimeDepositForm(FlaskForm):
 
 class TransferForm(FlaskForm):
     sender_account_number = IntegerField('Sender Account Number', [Required(), validate_account_number])
-    receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number])
+    receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number, validate_receiver_account])
     amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
 
 class UserTransferForm(FlaskForm):
     sender_account_number = SelectField('Account Number', [Required(), validate_account_number])
-    receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number])
+    receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number, validate_receiver_account])
     amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
 
 class InquiryForm(FlaskForm):
