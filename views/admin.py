@@ -142,7 +142,6 @@ def inquiry():
             User.first_name,
             User.last_name,
             Account.balance,
-            Account.time_deposit,
         ).join(User, attr='user').where(
             (Account.account_number == form.account_number.data)
         ).get()
