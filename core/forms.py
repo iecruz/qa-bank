@@ -52,7 +52,7 @@ class CreateUserForm(FlaskForm):
     password = PasswordField('Password', [Required(), Length(8), EqualTo('confirm_password', message='Password must match')])
     confirm_password = PasswordField('Confirm Password', [Required(), Length(8)])
     type = SelectField('Type', [Required()], choices=[
-        (9, 'Regular Customer'),
+        (9, 'Client'),
         # (3, 'Operator'),
         (1, 'Administrator/Operator')
     ], coerce=int)
@@ -66,7 +66,7 @@ class UpdateUserForm(FlaskForm):
     address = StringField('Address', [Required()])
     birth_date = DateField('Birth Date', [Required()])
     type = SelectField('Type', [Required()], choices=[
-        (9, 'Regular Customer'),
+        (9, 'Client'),
         # (3, 'Operator'),
         (1, 'Administrator/Operator')
     ], coerce=int)
