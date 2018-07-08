@@ -41,6 +41,11 @@ class CreateUserForm(FlaskForm):
     middle_name = StringField('Middle Name', [Required()])
     last_name = StringField('Last Name', [Required()])
     email_address = EmailField('Email Address', [Email(), Required()])
+
+    def validate_email_address(form, field):
+        if User.get_or_none(User.email_address == field.data):
+            raise ValidationError('Email address is already registered')
+
     phone_number = TelField('Phone Number', [Required(), Length(7,11), Regexp('[0-9]+')])
     address = StringField('Address', [Required()])
     birth_date = DateField('Birth Date', [Required()])
@@ -48,8 +53,8 @@ class CreateUserForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', [Required(), Length(8)])
     type = SelectField('Type', [Required()], choices=[
         (9, 'Regular Customer'),
-        (3, 'Operator'),
-        (1, 'Administrator')
+        # (3, 'Operator'),
+        (1, 'Administrator/Operator')
     ], coerce=int)
 
 class UpdateUserForm(FlaskForm):
@@ -62,15 +67,15 @@ class UpdateUserForm(FlaskForm):
     birth_date = DateField('Birth Date', [Required()])
     type = SelectField('Type', [Required()], choices=[
         (9, 'Regular Customer'),
-        (3, 'Operator'),
-        (1, 'Administrator')
+        # (3, 'Operator'),
+        (1, 'Administrator/Operator')
     ], coerce=int)
 
 class CreateAccountForm(FlaskForm):
     user_id = IntegerField('User ID', [Required()])
     def validate_user_id(form, field):
         if not User.get_or_none((User.id == field.data) & (User.type == 9)):
-            raise ValidationError('Customer does not exists')
+            raise ValidationError('User is not a customer')
 
     type = SelectField('Type', [Required()], choices=[
         (1, 'Savings'),

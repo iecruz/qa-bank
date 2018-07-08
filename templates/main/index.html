@@ -12,8 +12,9 @@
                 <h5 class="blue-text text-darken-2">Accounts</h5>
                 <div class="row">
                     {% for account in accounts %}
+                    {% set color = 'blue' if not account.deleted else 'red' %}
                     <div class="col s6">
-                        <div class="card-panel blue darken-2 white-text">
+                        <div class="card-panel {{ color }} darken-2 white-text">
                             <h5>{{ account.account_number }}</h5>
                             <h6>Account Number</h6>
                             <h5>
@@ -26,6 +27,8 @@
                                 {% endif %}
                             </h5>
                             <h6>Account Type</h6>
+                            <h5>{{ 'Active' if not account.deleted else 'Inactive' }}</h5>
+                            <h6>Status</h6>
                             <h5>&#8369; {{ account.balance }}</h5>
                             <h6>Balance</h6>
                         </div>
