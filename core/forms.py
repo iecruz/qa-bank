@@ -98,26 +98,26 @@ class CreateAccountForm(FlaskForm):
         (3, 'Time Deposit')
     ], coerce=int)
     pin = IntegerField('PIN', [Required(), NumberRange(1000,9999)])
-    balance = DecimalField('Initial Deposit', [Required(), NumberRange(1000)], places=2)
+    balance = DecimalField('Initial Deposit', [Required(), NumberRange(5000)], places=2)
 
 class TransactionForm(FlaskForm):
     account_number = IntegerField('Account Number', [Required(), validate_account_number])
-    amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
+    amount = DecimalField('Amount', [Required(), NumberRange(200)], places=2)
 
 class TimeDepositForm(FlaskForm):
     account_number = IntegerField('Account Number', [Required(), validate_account_number, validate_time_deposit])
     duration = SelectField('Duration', [Required()], coerce=int)
-    amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
+    amount = DecimalField('Amount', [Required(), NumberRange(200)], places=2)
 
 class TransferForm(FlaskForm):
     sender_account_number = IntegerField('Sender Account Number', [Required(), validate_account_number])
     receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number, validate_receiver_account])
-    amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
+    amount = DecimalField('Amount', [Required(), NumberRange(200)], places=2)
 
 class UserTransferForm(FlaskForm):
     sender_account_number = SelectField('Account Number', [Required(), validate_account_number])
     receiver_account_number = IntegerField('Receiver Account Number', [Required(), validate_account_number, validate_receiver_account])
-    amount = DecimalField('Amount', [Required(), NumberRange(500)], places=2)
+    amount = DecimalField('Amount', [Required(), NumberRange(200)], places=2)
 
 class InquiryForm(FlaskForm):
     account_number = IntegerField('Account Number', [Required(), validate_account_number])
