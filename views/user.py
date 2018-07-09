@@ -2,26 +2,26 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash
 from core.models import User
 from core.forms import CreateUserForm, UpdateUserForm, ChangePasswordForm
-from core.wrappers import authenticated
+from core.wrappers import admin_auth
 
 from datetime import datetime
 
 bp = Blueprint('user', __name__)
 
 @bp.route('/')
-@authenticated
+@admin_auth
 def index():
     users = User.select().execute()
     return render_template('user/index.html', users=users)
 
 @bp.route('/view/<int:id>')
-@authenticated
+@admin_auth
 def view(id):
     user = User.get(User.id == id)
     return render_template('user/view.html', user=user)
 
 @bp.route('/create', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def create():
     form = CreateUserForm(request.form)
     if form.validate_on_submit():
@@ -41,7 +41,7 @@ def create():
     return render_template('user/create.html', form=form)
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def update(id):
     form = UpdateUserForm(request.form)
     user = User.get(User.id == id)
@@ -62,7 +62,7 @@ def update(id):
     return render_template('user/update.html', form=form, user=user)
 
 @bp.route('/change_password', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def change_password():
     form = ChangePasswordForm(request.form)
     if form.validate_on_submit():
@@ -74,7 +74,7 @@ def change_password():
     return render_template('user/password.html', form=form)
 
 @bp.route('/deactivate/<int:id>')
-@authenticated
+@admin_auth
 def deactivate(id):
     User.update(
         deleted=True,
@@ -83,7 +83,7 @@ def deactivate(id):
     return redirect(url_for('user.index'))
 
 @bp.route('/activate/<int:id>')
-@authenticated
+@admin_auth
 def activate(id):
     User.update(
         deleted=False,

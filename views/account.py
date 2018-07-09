@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash
 from core.models import Account, User
 from core.forms import CreateAccountForm
-from core.wrappers import authenticated
+from core.wrappers import admin_auth
 
 from random import randint
 from datetime import datetime
@@ -10,7 +10,7 @@ from datetime import datetime
 bp = Blueprint('account', __name__)
 
 @bp.route('/')
-@authenticated
+@admin_auth
 def index():
     accounts = Account.select(
         Account.id, 
@@ -24,7 +24,7 @@ def index():
     return render_template('account/index.html', accounts=accounts)
 
 @bp.route('/create', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def create():
     form = CreateAccountForm(request.form)
     if form.validate_on_submit():
@@ -40,7 +40,7 @@ def create():
     return render_template('account/create.html', form=form)
 
 @bp.route('/deactivate/<int:id>')
-@authenticated
+@admin_auth
 def deactivate(id):
     Account.update(
         deleted=True,
@@ -49,7 +49,7 @@ def deactivate(id):
     return redirect(url_for('account.index'))
 
 @bp.route('/activate/<int:id>')
-@authenticated
+@admin_auth
 def activate(id):
     Account.update(
         deleted=False,

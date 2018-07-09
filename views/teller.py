@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from playhouse.shortcuts import model_to_dict
 from core.forms import TellerLoginForm, ChangePinForm, TransactionForm
 from core.wrappers import teller_auth
-from core.models import Account, User, Transaction, Log, fn
+from core.models import Account, User, Transaction, Log, fn, DoesNotExist
 
 from datetime import datetime, time
 
@@ -33,7 +33,7 @@ def withdraw():
                 (Transaction.type == 'ATM WITHDRAW')
             )
             .get()
-        ).amounts
+        ).amounts or 0
 
         if float(total_amount) + float(request.form.get('amount')) > 25000:
             flash('You have reached the daily maximum withdraw limit')
