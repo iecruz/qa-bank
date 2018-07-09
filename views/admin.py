@@ -3,14 +3,14 @@ from werkzeug.security import check_password_hash
 from core.models import Transaction, Account, User, TimeDeposit, Log, DoesNotExist
 from playhouse.shortcuts import model_to_dict
 from core.forms import LoginForm, TransactionForm, TransferForm, InquiryForm, TimeDepositForm
-from core.wrappers import authenticated
+from core.wrappers import admin_auth
 
 from datetime import datetime, timedelta
 
 bp = Blueprint('admin', __name__)
 
 @bp.route('/')
-@authenticated
+@admin_auth
 def index():
     time_deposits = TimeDeposit.select().where((TimeDeposit.terminal_date <= datetime.now()) & (TimeDeposit.deleted == False)).execute()
     history = Transaction.select().order_by(Transaction.created_at.desc()).execute()
@@ -26,7 +26,7 @@ def index():
     return render_template('admin/index.html', history=history)
     
 @bp.route('/deposit', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def deposit():
     form = TransactionForm(request.form)
     if form.validate_on_submit():
@@ -46,7 +46,7 @@ def deposit():
     return render_template('admin/deposit.html', form=form)
 
 @bp.route('/time_deposit', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def time_deposit():
     form = TimeDepositForm(request.form)
     form.duration.choices = ([
@@ -85,7 +85,7 @@ def time_deposit():
     return render_template('admin/time_deposit.html', form=form)
 
 @bp.route('/withdraw', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def withdraw():
     form = TransactionForm(request.form)
     if form.validate_on_submit():
@@ -112,7 +112,7 @@ def withdraw():
     return render_template('admin/withdraw.html', form=form)
 
 @bp.route('/transfer', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def transfer():
     form = TransferForm(request.form)
     if form.validate_on_submit():
@@ -140,7 +140,7 @@ def transfer():
     return render_template('admin/transfer.html', form=form)
 
 @bp.route('/inquiry', methods=['GET', 'POST'])
-@authenticated
+@admin_auth
 def inquiry():
     form = InquiryForm(request.form)
     account = None

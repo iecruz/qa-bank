@@ -43,24 +43,29 @@ def login():
                 user_id = user.id,
                 action = 'LOGIN'
             ).execute()
-            session['user'] = model_to_dict(user)
-
-            flash("Welcome back, {}!".format(user.first_name))
 
             if user.type <= 2:
+                session['admin'] = model_to_dict(user)
                 return redirect(url_for('admin.index'))
             else:
+                session['user'] = model_to_dict(user)
                 return redirect(url_for('main.index'))
+            flash("Welcome back, {}!".format(user.first_name))
     return render_template('main/login.html', form=form)
 
 @bp.route('/logout', methods=['GET', 'POST'])
-@authenticated
 def logout():
+    if 'user' in session:
+        user = session['user']
+        session.pop('user')
+    elif 'admin' in session:
+        user = session['admin']
+        session.pop('admin')
+
     Log.insert(
-        user_id = session['user']['id'],
+        user_id = user['id'],
         action = 'LOGOUT'
     ).execute()
-    session.pop('user')
     return redirect(url_for('main.login'))
 
 @bp.route('/history')
