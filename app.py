@@ -19,7 +19,7 @@ app.register_blueprint(main.bp)
 app.register_blueprint(admin.bp, url_prefix='/admin')
 app.register_blueprint(account.bp, url_prefix='/account')
 app.register_blueprint(user.bp, url_prefix='/admin/user')
-app.register_blueprint(teller.bp, url_prefix='/admin/teller')
+app.register_blueprint(teller.bp, url_prefix='/atm')
 
 @app.before_request
 def before_request():

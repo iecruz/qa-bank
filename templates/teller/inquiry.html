@@ -1,20 +1,17 @@
-{% extends 'teller/base.html' %}
-
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-sm-6">
-        <h2 class="font-weight-bold text-center text-uppercase">Balance Inquiry</h2>
-        <br>
-        <div class="card card-body bg-light">
-            <h1 class="font-weight-bold text-center">&#8369; {{ balance }}</h1>
-        </div>
-        <br>
-        <a href="{{ url_for('teller.index') }}" class="btn-custom">
-            <span>Another Transaction</span>
-        </a>
-        <a href="{{ url_for('teller.logout') }}" class="btn-custom">
-            <span>Exit</span>
-        </a>
+{% extends 'teller/base.html' %} {% block content %}
+<div class="card">
+    <div class="card-content">
+        <h2 class="card-title">Balance Inquiry</h2>
+        <h2 class="center-align blue-text text-darken-2">&#8369; {{ balance }}</h2>
+        <div class="section"></div>
+        <center>
+            <a href="{{ url_for('teller.logout') }}" class="btn-large waves-effect blue darken-2">
+                <i class="material-icons left">exit_to_app</i>Exit
+            </a>
+            <a href="{{ url_for('teller.index') }}" class="btn-large waves-effect blue darken-2">
+                <i class="material-icons left">repeat</i>Another Transaction
+            </a>
+        </center>
     </div>
 </div>
 {% endblock %}

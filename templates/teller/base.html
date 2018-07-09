@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css"> -->
-    <link  href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:regular,bold" rel="stylesheet" type="text/css" >
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/teller.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
     <style>
         body {
             font-family: 'Raleway', sans-serif;
         }
-        
+
         .full-height {
             height: 100vh;
         }
 
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            margin: 0; 
+        .btn-block {
+            display: block;
+            margin-bottom: 0.5rem;
         }
     </style>
-    {% block css %}
-    {% endblock %}
+    {% block css %} {% endblock %}
 
     <title>Bank</title>
 </head>
-<body class="bg-danger">
 
-    <main>
-        <div class="position-relative d-flex justify-content-center align-items-center full-height" style="background-image:url({{ url_for('static', filename='img/bg.png') }}); background-size:cover;">
-            <div class="container">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <div class="container">
+<body class="blue darken-2">
+    <main class="full-height valign-wrapper row" style="margin-bottom: 0rem;">
+        <div class="col s12 row">
+            <div class="container col s12 m6 offset-m3">
+                {% with messages = get_flashed_messages() %} {% if messages %}
+                <div class="section">
                     <div class="row justify-content-center">
                         {% for message in messages %}
                         <div class="col-sm-12 col-md-6 card card-body bg-danger text-white">
@@ -47,18 +42,18 @@
                         {% endfor %}
                     </div>
                 </div>
-                <br>
-                {% endif %}
-                {% endwith %}
-                {% block content %}
-                {% endblock %}
+                {% endif %} {% endwith %}
+                <div class="section">
+                    <h2 class="white-text center-align"><b>QAB</b>ank</h2>
+                    {% block content %} {% endblock %}
+                </div>
             </div>
         </div>
     </main>
 
     <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    {% block script %}
-    {% endblock %}
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    {% block script %} {% endblock %}
 </body>
+
 </html>

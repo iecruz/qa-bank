@@ -1,40 +1,33 @@
-{% extends 'teller/base.html' %}
-
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-sm-6">
-        <form id="changePinForm" action="{{ url_for('teller.change_pin') }}" method="POST">
-            {{ form.csrf_token }}
-            <h2 class="font-weight-bold text-center text-uppercase">Change PIN</h2>
-            <br>
-            <div class="card card-body bg-danger text-white">
-                <div class="form-group">
-                    {{ form.current_pin.label }}
-                    {{ form.current_pin(class_='form-control') }}
-                    {% for error in form.current_pin.errors %}
-                        <small class="form-text">{{ error }}</small>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ form.new_pin.label }}
-                    {{ form.new_pin(class_='form-control') }}
-                    {% for error in form.new_pin.errors %}
-                        <small class="form-text">{{ error }}</small>
-                    {% endfor %}
-                </div>
-                <div class="form-group">
-                    {{ form.confirm_pin.label }}
-                    {{ form.confirm_pin(class_='form-control') }}
-                    {% for error in form.confirm_pin.errors %}
-                        <small class="form-text">{{ error }}</small>
-                    {% endfor %}
-                </div>
+{% extends 'teller/base.html' %} {% block content %}
+<form id="changePinForm" action="{{ url_for('teller.change_pin') }}" method="POST">
+    {{ form.csrf_token }}
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Change PIN</h2>
+            <div class="input-field">
+                {{ form.current_pin.label }} {{ form.current_pin(class_='validate') }} {% for error in form.current_pin.errors %}
+                <small class="red-text">{{ error }}</small>
+                {% endfor %}
             </div>
-            <a href="#!" class="btn-custom" onclick="document.getElementById('changePinForm').submit()">
-                <span>Enter</span>
-            </a>
-            <a href="{{ url_for('teller.index') }}" class="btn-custom"><span>Back</span></a>
-        </form>
+            <div class="input-field">
+                {{ form.new_pin.label }} {{ form.new_pin(class_='validate') }} {% for error in form.new_pin.errors %}
+                <small class="red-text">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="input-field">
+                {{ form.confirm_pin.label }} {{ form.confirm_pin(class_='validate') }} {% for error in form.confirm_pin.errors %}
+                <small class="red-text">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <center>
+                <a href="{{ url_for('teller.index') }}" class="btn-large waves-effect blue darken-2">
+                    <i class="material-icons left">keyboard_arrow_left</i>Back
+                </a>
+                <button type="submit" class="btn-large waves-effect blue darken-2">
+                    <i class="material-icons left">send</i>Enter
+                </a>
+            </center>
+        </div>
     </div>
-</div>
+</form>
 {% endblock %}

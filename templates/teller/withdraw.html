@@ -1,22 +1,27 @@
-{% extends 'teller/base.html' %}
-
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-sm-6">
-        <form id="withdrawForm" action="{{ url_for('teller.withdraw') }}" method="POST">
-            <h2 class="font-weight-bold text-center text-uppercase">Withdraw</h2>
-            <br>
-            <div class="card card-body bg-danger text-white">
-                <h5 class="card-title">Enter Amount</h5>
-                <div class="form-group">
+{% extends 'teller/base.html' %} {% block content %}
+<form action="{{ url_for('teller.withdraw') }}" method="POST">
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Withdraw</h2>
+            <div class="row">
+                <div class="input-field col s12 m9">
                     <input type="number" name="amount" id="amountField" class="form-control" min="0" max="25000">
+                    <label for="amountField">Enter Amount</label>
+                </div>
+                <div class="col s12 m3">
+                    <center>
+                        <button class="btn-large waves-effect blue darken-2">
+                            <i class="material-icons left">send</i>Enter
+                        </button>
+                    </center>
                 </div>
             </div>
-            <a href="#!" class="btn-custom" onclick="document.getElementById('withdrawForm').submit()">
-                <span>Enter</span>
-            </a>
-            <a href="{{ url_for('teller.index') }}" class="btn-custom"><span>Back</span></a>
-        </form>
+            <center>
+                <a href="{{ url_for('teller.index') }}" class="btn-large waves-effect blue darken-2">
+                    <i class="material-icons left">keyboard_arrow_left</i>Back
+                </a>
+            </center>
+        </div>
     </div>
-</div>
+</form>
 {% endblock %}
